@@ -1,0 +1,78 @@
+<div *ngIf="!loading else notLoaded">
+    <table *ngIf="(films | searchPipe: 'title': searchTitle).length > 0 else noData"
+        class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Rating</th>
+                <th>Genre</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let f of films | searchPipe: 'title': searchTitle">
+            <tr>
+                <td>{{f.title}}</td>
+                <td>{{f.author}}</td>
+                <td>{{f.rating}}</td>
+                <td>{{f.genre}}</td>
+                <td>
+                    <button type="button" class="btn btn-danger" (click)="deleteFilm(f.id)">Delete</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-info" (click)="openModal(template, f, 'Edit')" [disabled]="f.rating > 3">Edit</button> 
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <ng-template #noData>
+        No data to display
+    </ng-template>
+</div>
+    
+<button type="button" class="btn btn-primary" (click)="openModal(template, {}, 'Create')">Create new film</button>
+
+<ng-template #template>
+    <div class="modal-header">
+        <h4>{{modalTitle}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <input id="title" class="form-control" placeholder="title" [(ngModel)]='newFilm.title'><br>
+        <input id="author" class="form-control" placeholder="author" [(ngModel)]='newFilm.author'><br>
+        <select name="rating" [(ngModel)]='newFilm.rating'> 
+            <option value="1">1</option> 
+            <option value="2">2</option> 
+            <option value="3">3</option> 
+        </select><br>
+        <select name="rating" [(ngModel)]='newFilm.genre'> 
+            <option value="comedy">comedy</option> 
+            <option value="drama">drama</option> 
+            <option value="cartoon">cartoon</option> 
+        </select>
+        <!-- <input id="rating" class="form-control" placeholder="rating" [(ngModel)]='newFilm.rating'><br> -->
+        <!-- <input id="genre" class="form-control" placeholder="genre" [(ngModel)]='newFilm.genre'><br> -->
+            
+        <div *ngIf="modalTitle === 'Edit' else create">
+            <button type="button" class="btn btn-light" (click)="editFilm(newFilm)">
+                Edit
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #create>
+    <button type="button" class="btn btn-light" (click)="createFilm()">
+        Create
+    </button>     
+</ng-template>
+    
+<ng-template #notLoaded>
+    <div class="spinner">
+        <i class="fa fa-spinner fa-pulse"></i>
+    </div>
+</ng-template>

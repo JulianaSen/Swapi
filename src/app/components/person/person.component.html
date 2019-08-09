@@ -1,0 +1,25 @@
+<div class="container">
+    <div *ngFor="let p of people">
+        <div class="card" *ngIf="person == p.name">
+            <div class="card-body">
+                <h4 class="card-title">
+                    {{p.name}}
+                </h4>
+                <h6 class="card-subtitle">
+                    Birth year: {{p.birth_year}}
+                </h6><br>
+                <p class="card-text">
+                    Height: {{p.height}} <br>
+                    Mass: {{p.mass}} <br>
+                    Hair color: {{p.hair_color}} <br>
+                    Skin color: {{p.skin_color}} <br>
+                    Eye color: {{p.eye_color}} <br>
+                    Gender: {{p.gender}}<br>
+                    <!-- <button type="button" class="btn btn-light" (click)="show(p.name); clicked = true;" [disabled]="clicked">
+                        Show films
+                    </button> -->
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

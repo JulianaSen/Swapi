@@ -1,0 +1,22 @@
+.star-check {
+    position: relative;
+    visibility: hidden;
+}
+
+.star-check::after {
+    content: '';
+    height: 20px;
+    width: 20px;
+    background-image: url('../../../assets/img/star2.png');
+    position: absolute;
+    background-position: center;
+    background-size: cover;
+    visibility: visible !important;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+}
+
+.star-check:checked.star-check::after {
+    background-image: url('../../../assets/img/star.png') !important;
+}

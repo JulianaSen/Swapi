@@ -1,0 +1,32 @@
+{
+  "films": [
+    {
+      "rating": "4",
+      "id": 12,
+      "genre": "dad",
+      "title": "awd",
+      "author": "ada"
+    },
+    {
+      "title": "ded",
+      "author": "ewfews",
+      "rating": "2",
+      "genre": "wfe",
+      "id": 16
+    },
+    {
+      "title": "ddd",
+      "author": "d",
+      "genre": "comedy",
+      "rating": "2",
+      "id": 17
+    },
+    {
+      "title": "cdvfg",
+      "author": "fgh",
+      "rating": "2",
+      "genre": "drama",
+      "id": 18
+    }
+  ]
+}

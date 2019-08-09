@@ -1,0 +1,32 @@
+<table *ngIf="(people | searchPipe: 'name': searchN | searchPipe: 'height': searchH).length > 0
+    else noData"
+    class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Height</th>
+            <th>Mass</th>
+            <th>Hair color</th>
+            <th>Skin color</th>
+            <th>Eye color</th>
+            <th>Birth year</th>
+            <th>Gender</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let p of people | searchPipe: 'name': searchN | searchPipe: 'height': searchH">
+        <tr routerLink="/details/{{p.name}}">
+            <td>{{p.name}}</td>
+            <td>{{p.height}}</td>
+            <td>{{p.mass}}</td>
+            <td>{{p.hair_color}}</td>
+            <td>{{p.skin_color}}</td>
+            <td>{{p.eye_color}}</td>
+            <td>{{p.birth_year}}</td>
+            <td>{{p.gender}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ng-template #noData>
+    No data to display
+</ng-template>
