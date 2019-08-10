@@ -18,3 +18,9 @@
     width: 90%;
     margin: auto;
 }
+
+.noData {
+    margin: auto;
+    width: 15%;
+    margin-bottom: 20px;
+}

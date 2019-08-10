@@ -1,0 +1,30 @@
+Theory:
+1. Array methods
+2. Component interaction
+3. Lifecicle hooks
+4. Spread(... анотанця)
+5. ChangeDetection
+6. Forms, validation
+7. RXJS(suscribe, unsubscribe, pipe, tap, take)
+8. States in Angular
+9. Git
+10. Namespases and interfaces
+
+Practice:
+1. Add spiner, when data is loading
+2. Create git repository, make few branches
+
+	Swapi components:
+3. Add possibility to like film
+4. Change the way of person display
+5. Make film loading immediately(not by pressing button)
+6. Style cards(add some text, make footer for additional info)
+
+	MyFilms components:
+7. Implement form validation
+8. Change input fields to select (rating ang genre field)
+9. Add condition on edit button
+
+
+
+
