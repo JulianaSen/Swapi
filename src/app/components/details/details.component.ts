@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../../services/data.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { IPeople } from '../../../interfaces/people';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-details',
@@ -13,10 +11,12 @@ import { ThrowStmt } from '@angular/compiler';
 export class DetailsComponent implements OnInit {
 
   private routeSub: Subscription;
+  private dataS: Subscription;
   people = [];
   person: string;
   films = [];
   userFilms = [];
+  test = [];
   loading = true;
 
   constructor(private _dataService: DataService, private route: ActivatedRoute) { }
@@ -37,26 +37,30 @@ export class DetailsComponent implements OnInit {
   }
 
   showFilmsOfPerson(name: string) {
-    this.people.map((item) => {
-      if(item.name === name) {
-        this.films = item.films;
-        this.loading = false;
-        for(let i = 0; i < this.films.length; i++) {
-          this.userFilms = [... this.userFilms, this.showFilm(this.films[i])];
-        }
+    this.people.map(item => {
+      if(this.person === name && item.name === name) {
+        this.films = item.films
       }
-    });
+    })
+    
+    this.films.map(elem => {
+      this.test = [...this.test, this.showFilm(elem)]
+    })
+
+    this.loading = false;
   }
 
-  showFilm (film: string) {
-    this._dataService.getFilms(film)
-      .subscribe((data) => { 
-        return data;
+  showFilm (url: string) {
+    this.dataS = this._dataService.getFilms(url)
+      .subscribe(data => { 
+        this.userFilms.push(data);
+        this.test = data;
       })
   }
 
   ngOnDestroy() {
     this.routeSub.unsubscribe();
+    this.dataS.unsubscribe();
   }
 
 }

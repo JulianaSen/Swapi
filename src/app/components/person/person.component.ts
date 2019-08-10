@@ -10,17 +10,10 @@ export class PersonComponent implements OnInit {
 
   @Input() people: IPeople; 
   @Input() person: string;
-  @Input() clicked: boolean;
-  
-  @Output() showFilms = new EventEmitter<string>();
 
   constructor() { }
 
   ngOnInit() {
-  }
-
-  show(name: string) {
-    this.showFilms.emit(name);
   }
 
 }

@@ -10,21 +10,10 @@ export class FilmListComponent implements OnInit {
   @Input() userFilms: string[]; 
 
   random= [];
-  src: string;
-  title: string;
 
   constructor() { }
 
   ngOnInit() {
-  }
-
-  changeImage(film, src) {
-    this.userFilms.map((item) => {
-      if(film === item['title']) {
-        this.title = item['title'];
-        this.src = src;
-      }
-    });
   }
 
   randomize(i) {

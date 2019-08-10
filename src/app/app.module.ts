@@ -22,6 +22,7 @@ import { PersonComponent } from './components/person/person.component';
 import { FilmListComponent } from './components/film-list/film-list.component';
 
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     FormsModule,
     ModalModule.forRoot(),
     AngularFontAwesomeModule,
+    ReactiveFormsModule,
   ],
   providers: [DataService, FilmService],
   bootstrap: [AppComponent]

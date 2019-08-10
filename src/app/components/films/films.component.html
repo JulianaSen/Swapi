@@ -1,3 +1,11 @@
+<app-input 
+    [type]="type" 
+    [class]="class" 
+    [placeholder]="placeholder"
+    [model]="searchTitle" 
+    (searchType)="checkEvent($event)">
+</app-input><br>
+
 <div *ngIf="!loading else notLoaded">
     <table *ngIf="(films | searchPipe: 'title': searchTitle).length > 0 else noData"
         class="table">
@@ -32,7 +40,7 @@
     </ng-template>
 </div>
     
-<button type="button" class="btn btn-primary" (click)="openModal(template, {}, 'Create')">Create new film</button>
+<button type="button" class="btn btn-primary createBtn" (click)="openModal(template, {}, 'Create')">Create new film</button>
 
 <ng-template #template>
     <div class="modal-header">
@@ -42,23 +50,39 @@
         </button>
     </div>
     <div class="modal-body">
-        <input id="title" class="form-control" placeholder="title" [(ngModel)]='newFilm.title'><br>
-        <input id="author" class="form-control" placeholder="author" [(ngModel)]='newFilm.author'><br>
-        <select name="rating" [(ngModel)]='newFilm.rating'> 
-            <option value="1">1</option> 
-            <option value="2">2</option> 
-            <option value="3">3</option> 
-        </select><br>
-        <select name="rating" [(ngModel)]='newFilm.genre'> 
-            <option value="comedy">comedy</option> 
-            <option value="drama">drama</option> 
-            <option value="cartoon">cartoon</option> 
-        </select>
-        <!-- <input id="rating" class="form-control" placeholder="rating" [(ngModel)]='newFilm.rating'><br> -->
-        <!-- <input id="genre" class="form-control" placeholder="genre" [(ngModel)]='newFilm.genre'><br> -->
+        <label>Title:</label>
+        <input id="title" class="form-control" [(ngModel)]='newFilm.title'><br>
+        <label>Author:</label>
+        <input id="author" class="form-control" [(ngModel)]='newFilm.author'><br>
+        <label>Rating:</label>
+        <div class="form-group">
+            <select class="form-control" name="rating" [(ngModel)]='newFilm.rating'> 
+                <option *ngFor="let rating of ratings; let i = index" [value]="ratings[i].name">
+                    {{ratings[i].name}}
+                </option>
+            </select>
+            <!-- <select class="form-control" name="rating" [(ngModel)]='newFilm.rating'> 
+                <option value="1" selected="selected">1</option> 
+                <option value="2">2</option> 
+                <option value="3">3</option> 
+            </select> -->
+        </div>
+        <label>Genre:</label>
+        <div class="form-group">
+            <select class="form-control" name="genre" [(ngModel)]='newFilm.genre'> 
+                <option *ngFor="let genre of genres; let i = index" [value]="genres[i].name">
+                    {{genres[i].name}}
+                </option>
+            </select>
+            <!-- <select class="form-control" name="genre" [(ngModel)]='newFilm.genre'> 
+                <option value="comedy">comedy</option> 
+                <option value="drama">drama</option> 
+                <option value="cartoon">cartoon</option> 
+            </select> -->
+        </div>
             
         <div *ngIf="modalTitle === 'Edit' else create">
-            <button type="button" class="btn btn-light" (click)="editFilm(newFilm)">
+            <button type="button" class="btn btn-light myBtn" (click)="editFilm(newFilm)">
                 Edit
             </button>
         </div>
@@ -66,7 +90,7 @@
 </ng-template>
 
 <ng-template #create>
-    <button type="button" class="btn btn-light" (click)="createFilm()">
+    <button type="button" class="btn btn-light myBtn" (click)="createFilm()">
         Create
     </button>     
 </ng-template>
@@ -76,3 +100,4 @@
         <i class="fa fa-spinner fa-pulse"></i>
     </div>
 </ng-template>
+

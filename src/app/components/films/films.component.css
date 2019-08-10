@@ -3,3 +3,18 @@
     display: flex;
     justify-content: center;
 }
+
+.myBtn {
+    float: right;
+}
+
+.createBtn {
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
+
+.table {
+    width: 90%;
+    margin: auto;
+}
