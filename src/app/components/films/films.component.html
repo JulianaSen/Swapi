@@ -36,7 +36,9 @@
     </table>
     
     <ng-template #noData>
-        No data to display
+        <div class="noData">
+            No data to display
+        </div>    
     </ng-template>
 </div>
     
@@ -45,52 +47,82 @@
 <ng-template #template>
     <div class="modal-header">
         <h4>{{modalTitle}}</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
             <span aria-hidden="true">&times;</span>
-        </button>
+        </button> -->
     </div>
+
     <div class="modal-body">
+        <form [formGroup]="form">
         <label>Title:</label>
-        <input id="title" class="form-control" [(ngModel)]='newFilm.title'><br>
+        <div class="form-group">
+            <input [class.is-invalid]="form.get('title').invalid && form.get('title').touched" 
+                formControlName="title"
+                class="form-control" 
+                [(ngModel)]='newFilm.title'>
+            <small [class.d-none]="form.get('title').valid || form.get('title').untouched" 
+                class="text-danger">
+                Title is required
+            </small>
+        </div>
+
         <label>Author:</label>
-        <input id="author" class="form-control" [(ngModel)]='newFilm.author'><br>
+        <div class="form-group">
+            <input [class.is-invalid]="form.get('author').invalid && form.get('author').touched"
+                formControlName="author"
+                class="form-control" 
+                [(ngModel)]='newFilm.author'>
+            <small [class.d-none]="form.get('author').valid || form.get('author').untouched" 
+                class="text-danger">
+                Author is required
+            </small>
+        </div>
+
         <label>Rating:</label>
         <div class="form-group">
-            <select class="form-control" name="rating" [(ngModel)]='newFilm.rating'> 
+            <select [class.is-invalid]="form.get('rating').invalid && form.get('rating').touched"
+                formControlName="rating"
+                class="form-control" 
+                name="rating" 
+                [(ngModel)]='newFilm.rating'> 
                 <option *ngFor="let rating of ratings; let i = index" [value]="ratings[i].name">
                     {{ratings[i].name}}
                 </option>
             </select>
-            <!-- <select class="form-control" name="rating" [(ngModel)]='newFilm.rating'> 
-                <option value="1" selected="selected">1</option> 
-                <option value="2">2</option> 
-                <option value="3">3</option> 
-            </select> -->
+            <small [class.d-none]="form.get('rating').valid || form.get('rating').untouched" 
+                class="text-danger">
+                Rating is required
+            </small>
         </div>
+
         <label>Genre:</label>
         <div class="form-group">
-            <select class="form-control" name="genre" [(ngModel)]='newFilm.genre'> 
+            <select [class.is-invalid]="form.get('genre').invalid && form.get('genre').touched"
+                formControlName="genre"
+                class="form-control" 
+                name="genre" 
+                [(ngModel)]='newFilm.genre'> 
                 <option *ngFor="let genre of genres; let i = index" [value]="genres[i].name">
                     {{genres[i].name}}
                 </option>
             </select>
-            <!-- <select class="form-control" name="genre" [(ngModel)]='newFilm.genre'> 
-                <option value="comedy">comedy</option> 
-                <option value="drama">drama</option> 
-                <option value="cartoon">cartoon</option> 
-            </select> -->
+            <small [class.d-none]="form.get('genre').valid || form.get('genre').untouched" 
+                class="text-danger">
+                Genre is required
+            </small>
         </div>
             
         <div *ngIf="modalTitle === 'Edit' else create">
-            <button type="button" class="btn btn-light myBtn" (click)="editFilm(newFilm)">
+            <button [disabled]="!form.valid" type="button" class="btn btn-light myBtn" (click)="editFilm(newFilm)">
                 Edit
             </button>
         </div>
+    </form>
     </div>
 </ng-template>
 
 <ng-template #create>
-    <button type="button" class="btn btn-light myBtn" (click)="createFilm()">
+    <button [disabled]="!form.valid" type="button" class="btn btn-light myBtn" (click)="createFilm()">
         Create
     </button>     
 </ng-template>
@@ -100,4 +132,3 @@
         <i class="fa fa-spinner fa-pulse"></i>
     </div>
 </ng-template>
-

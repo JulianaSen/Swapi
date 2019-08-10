@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FilmService } from '../../../services/film.service';
 import { setTheme } from 'ngx-bootstrap/utils';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { FormBuilder, FormGroup, FormArray, FormControl, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-films',
@@ -12,12 +12,11 @@ import { FormBuilder, FormGroup, FormArray, FormControl, ValidatorFn } from '@an
 export class FilmsComponent implements OnInit {
 
   modalRef: BsModalRef;
-  form: FormGroup
-  films = [];
   modalTitle: string;
   checked: boolean;
   loading = true;
-
+  
+  films = [];
   genres = [];
   ratings = [];
 
@@ -35,16 +34,19 @@ export class FilmsComponent implements OnInit {
     genre: ""
   };
   
+  form = this.formBuilder.group({
+    title: ['', Validators.required],
+    author: ['', Validators.required],
+    genre: ['', Validators.required],
+    rating: ['', Validators.required]
+  });
+
   constructor(private _filmService: FilmService, 
     private modalService: BsModalService,
     private formBuilder: FormBuilder) { 
-    setTheme('bs4');
-    this.form = this.formBuilder.group({
-      genre: [''],
-      rating: ['']
-    });
-    this.genres = this.getGenre();
-    this.ratings = this.getRating();
+      setTheme('bs4');
+      this.genres = this.getGenre();
+      this.ratings = this.getRating();
   }
 
   ngOnInit() {
@@ -70,8 +72,8 @@ export class FilmsComponent implements OnInit {
       this._filmService.addFilm(this.newFilm)
         .subscribe(() => {
           this.showFilms();
-          //this.newFilm = null;
           this.modalRef.hide();
+          this.form.reset();
         });
   }
  
@@ -79,14 +81,13 @@ export class FilmsComponent implements OnInit {
      this._filmService.updateFilm(film.id, this.newFilm)
         .subscribe(() => {
           this.showFilms();
-          //this.newFilm = null;
           this.modalRef.hide();
         });
   }
 
   openModal(template: TemplateRef<any>, film, title) {
     this.modalTitle = title;
-    this.modalRef = this.modalService.show(template);
+    this.modalRef = this.modalService.show(template, {keyboard: false,backdrop: 'static'});
     this.newFilm = film;
   }
 

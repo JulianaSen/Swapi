@@ -2,3 +2,8 @@
     width: 90%;
     margin: auto;
 }
+
+.noData {
+    margin: auto;
+    width: 15%;
+}
