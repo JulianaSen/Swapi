@@ -6,15 +6,17 @@ Theory:
 5. ChangeDetection + 
 6. Forms, validation +
 7. RXJS(suscribe, unsubscribe, pipe, tap, take)
-8. States in Angular, NGRX, NGXS
+8. States in Angular (NGXS)
 9. Git +
 10. Namespases and interfaces
 11. Resolvers
+12. Read about NGRX
 
 Practice:
 1. Add spiner, when data is loading + 
 2. Create git repository, make few branches +
-3. Implement States and resolvers to project
+3. Implement States and resolvers to project(NGXS)
+4. Create small docs or presentation about states + NGXS  and NGRX
 
 	Swapi components:
 4. Add possibility to like film + 
