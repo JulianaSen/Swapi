@@ -1,13 +1,6 @@
 {
   "films": [
     {
-      "title": "ddd",
-      "author": "d",
-      "genre": "comedy",
-      "rating": "2",
-      "id": 17
-    },
-    {
       "genre": "drama",
       "rating": "2",
       "author": "ads",

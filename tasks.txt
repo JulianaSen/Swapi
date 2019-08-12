@@ -4,10 +4,10 @@ Theory:
 3. Lifecicle hooks+
 4. Spread(... анотанця) +
 5. ChangeDetection + 
-6. Forms, validation
+6. Forms, validation +
 7. RXJS(suscribe, unsubscribe, pipe, tap, take)
 8. States in Angular, NGRX, NGXS
-9. Git+
+9. Git +
 10. Namespases and interfaces
 11. Resolvers
 
@@ -17,15 +17,15 @@ Practice:
 3. Implement States and resolvers to project
 
 	Swapi components:
-3. Add possibility to like film + 
-4. Change the way of person display +
-5. Make film loading immediately(not by pressing button) +
-6. Style cards(add some text, make footer for additional info) + 
+4. Add possibility to like film + 
+5. Change the way of person display +
+6. Make film loading immediately(not by pressing button) +
+7. Style cards(add some text, make footer for additional info) + 
 
 	MyFilms components:
-7. Implement form validation
-8. Change input fields to select (rating ang genre field) + 
-9. Add condition on edit button
+8. Implement form validation
+9. Change input fields to select (rating ang genre field) + 
+10. Add condition on edit button +
 
 
 
