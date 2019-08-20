@@ -3,6 +3,12 @@ import { FilmService } from '../../../services/film.service';
 import { setTheme } from 'ngx-bootstrap/utils';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store, Select } from '@ngxs/store';
+import { DeleteFilm, GetFilms, SetSelectedFilm, AddFilm, UpdateFilm } from '../../actions/films.actions';
+import { FilmState } from '../../states/films.state';
+import { IFilm } from '../../../interfaces/films';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-films',
@@ -16,7 +22,7 @@ export class FilmsComponent implements OnInit {
   checked: boolean;
   loading = true;
   
-  films = [];
+  //films = [];
   genres = [];
   ratings = [];
 
@@ -43,47 +49,80 @@ export class FilmsComponent implements OnInit {
 
   constructor(private _filmService: FilmService, 
     private modalService: BsModalService,
-    private formBuilder: FormBuilder) { 
+    private formBuilder: FormBuilder,
+    private store: Store) { 
       setTheme('bs4');
       this.genres = this.getGenre();
       this.ratings = this.getRating();
   }
 
+  @Select(FilmState.getFilmList) films: Observable<IFilm[]>;
+
   ngOnInit() {
-    this.showFilms();
-  }
-
-  showFilms() {
-    this._filmService.getFilms()
-      .subscribe(data => {
-        this.films = data;
+    //this.showFilms();
+    this.store.dispatch(new GetFilms())
+    .pipe(take(1))
+    .subscribe(res => {
+      if(res){
         this.loading = false;
-      });
+      }
+    });
   }
 
-  deleteFilm(filmId) {
-    return this._filmService.deleteFilm(filmId)
-      .subscribe(() => {
-        this.showFilms();
-      });
+  deleteFilm(id: number) {
+    this.store.dispatch(new DeleteFilm(id));
+  }
+
+  updateFilm(payload: IFilm) {
+    this.store.dispatch(new UpdateFilm(payload))
+    //this.store.dispatch(new SetSelectedFilm(payload))
+    .pipe(take(1))
+    .subscribe(() => {
+      this.modalRef.hide();
+      this.store.dispatch(new GetFilms());
+    });    
   }
 
   createFilm() {
-      this._filmService.addFilm(this.newFilm)
-        .subscribe(() => {
-          this.showFilms();
-          this.modalRef.hide();
-          this.form.reset();
-        });
+    this.store.dispatch(new AddFilm(this.newFilm))
+    .pipe(take(1))
+    .subscribe(() => {
+      this.modalRef.hide();
+      this.form.reset();
+    });
   }
+
+  // showFilms() {
+  //   this._filmService.getFilms()
+  //     .subscribe(data => {
+  //       this.films = data;
+  //       this.loading = false;
+  //     });
+  // }
+
+  // deleteFilm(filmId) {
+  //   return this._filmService.deleteFilm(filmId)
+  //     .subscribe(() => {
+  //       this.showFilms();
+  //     });
+  // }
+
+  // createFilm() {
+  //     this._filmService.addFilm(this.newFilm)
+  //       .subscribe(() => {
+  //         this.showFilms();
+  //         this.modalRef.hide();
+  //         this.form.reset();
+  //       });
+  // }
  
-  editFilm(film) {
-     this._filmService.updateFilm(film.id, this.newFilm)
-        .subscribe(() => {
-          this.showFilms();
-          this.modalRef.hide();
-        });
-  }
+  // editFilm(film) {
+  //    this._filmService.updateFilm(film.id, this.newFilm)
+  //       .subscribe(() => {
+  //         this.showFilms();
+  //         this.modalRef.hide();
+  //       });
+  // }
 
   openModal(template: TemplateRef<any>, film, title) {
     this.modalTitle = title;

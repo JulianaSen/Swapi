@@ -7,7 +7,7 @@
 </app-input><br>
 
 <div *ngIf="!loading else notLoaded">
-    <table *ngIf="(films | searchPipe: 'title': searchTitle).length > 0 else noData"
+    <table *ngIf="((films | async) | searchPipe: 'title': searchTitle).length > 0 else noData"
         class="table">
         <thead>
             <tr>
@@ -19,7 +19,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody *ngFor="let f of films | searchPipe: 'title': searchTitle">
+        <tbody *ngFor="let f of (films | async) | searchPipe: 'title': searchTitle">
             <tr>
                 <td>{{f.title}}</td>
                 <td>{{f.author}}</td>
@@ -113,7 +113,7 @@
         </div>
             
         <div *ngIf="modalTitle === 'Edit' else create">
-            <button [disabled]="!form.valid" type="button" class="btn btn-light myBtn" (click)="editFilm(newFilm)">
+            <button [disabled]="!form.valid" type="button" class="btn btn-light myBtn" (click)="updateFilm(newFilm)">
                 Edit
             </button>
         </div>

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgxsModule } from '@ngxs/store';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -23,6 +24,7 @@ import { FilmListComponent } from './components/film-list/film-list.component';
 
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FilmState } from './states/films.state';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     FilmListComponent
   ],
   imports: [
+    NgxsModule.forRoot([
+      FilmState
+    ]),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
