@@ -19,20 +19,35 @@ export class FilmService {
   
   constructor(private http: HttpClient) { }
 
-  getFilms(): Observable<IFilm[]> {
-    return this.http.get<IFilm[]>(this._urlFilms);
+  // getFilms(): Observable<IFilm[]> {
+  //   return this.http.get<IFilm[]>(this._urlFilms);
+  // }
+
+  // deleteFilm(film_id): Observable<{}> {
+  //   return this.http.delete(this._urlFilms + '/' + film_id);
+  // }
+
+  // addFilm(film: IFilm): Observable<IFilm> {
+  //   return this.http.post<IFilm>(this._urlFilms, JSON.stringify(film), httpOptions);
+  // }
+
+  // updateFilm(film_id, film: IFilm) {
+  //   return this.http.put(this._urlFilms + '/' + film_id, film);
+  // }
+
+  getFilms() {
+      return this.http.get<IFilm[]>(this._urlFilms);
   }
 
-  deleteFilm(film_id): Observable<{}> {
-    return this.http.delete(this._urlFilms + '/' + film_id);
+  deleteFilm(id: number) {
+      return this.http.delete(this._urlFilms + '/' + id);
   }
 
-  addFilm(film: IFilm): Observable<IFilm> {
-    return this.http.post<IFilm>(this._urlFilms, JSON.stringify(film), httpOptions);
+  addFilm(payload: IFilm) {
+      return this.http.post<IFilm>(this._urlFilms, JSON.stringify(payload), httpOptions);
   }
 
-  updateFilm(film_id, film: IFilm) {
-    return this.http.put(this._urlFilms + '/' + film_id, film);
+  updateFilm(payload: IFilm) {
+      return this.http.put<IFilm>(this._urlFilms + '/' + payload.id, payload);
   }
-
 }
