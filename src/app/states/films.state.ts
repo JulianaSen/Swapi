@@ -1,19 +1,17 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { IFilm } from '../../interfaces/films';
-import { AddFilm, DeleteFilm, GetFilms, SetSelectedFilm, UpdateFilm } from '../actions/films.actions';
+import { AddFilm, DeleteFilm, GetFilms, UpdateFilm } from '../actions/films.actions';
 import { FilmService } from '../../services/film.service';
 import { tap } from 'rxjs/operators';
 
 export class FilmStateModel {
     films: IFilm[];
-    selectedFilm: IFilm;
 }
 
 @State<FilmStateModel>({
     name: 'films',
     defaults: {
-        films: [],
-        selectedFilm: null
+        films: []
     }
 })
 export class FilmState {
@@ -21,20 +19,14 @@ export class FilmState {
     }
 
     @Selector()
-    static getFilmList(state: FilmStateModel) {
-        return state.films;
-    }
-
-    @Selector() getSelectedFilm(state: FilmStateModel) {
-        return state.selectedFilm;
+    static getFilmList({films}: FilmStateModel) {
+        return films;
     }
 
     @Action(GetFilms)
-    getFilms({getState, setState}: StateContext<FilmStateModel>) {
+    getFilms({patchState}: StateContext<FilmStateModel>) {
         return this.filmService.getFilms().pipe(tap((result) => {
-            const state = getState();
-            setState({
-                ...state,
+            patchState({
                 films: result,
             });
         }));
@@ -76,14 +68,4 @@ export class FilmState {
             });
         }));
     }
-
-    @Action(SetSelectedFilm)
-    setSelectedFilmId({getState, setState}: StateContext<FilmStateModel>, {payload}: SetSelectedFilm) {
-        const state = getState();
-        setState({
-            ...state,
-            selectedFilm: payload
-        });
-    }
-
 }

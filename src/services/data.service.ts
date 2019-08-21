@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Film, Response } from '../interfaces/people';
+import { Film, IPeople } from '../interfaces/people';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +12,11 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  getPeople(): Observable<Response> {
-    return this.http.get<Response>(this._urlPeople);
+  getPeople() {
+    return this.http.get<IPeople[]>(this._urlPeople);
   }
 
-  getFilms(url: string): Observable<Film[]> {
+  getFilms(url: string) {
     return this.http.get<Film[]>(url);
   }
 }

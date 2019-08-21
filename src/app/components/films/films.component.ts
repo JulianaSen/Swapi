@@ -1,10 +1,10 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FilmService } from '../../../services/film.service';
 import { setTheme } from 'ngx-bootstrap/utils';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store, Select } from '@ngxs/store';
-import { DeleteFilm, GetFilms, SetSelectedFilm, AddFilm, UpdateFilm } from '../../actions/films.actions';
+import { DeleteFilm, GetFilms, AddFilm, UpdateFilm } from '../../actions/films.actions';
 import { FilmState } from '../../states/films.state';
 import { IFilm } from '../../../interfaces/films';
 import { Observable } from 'rxjs';
@@ -12,6 +12,7 @@ import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-films',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './films.component.html',
   styleUrls: ['./films.component.css']
 })
@@ -25,6 +26,7 @@ export class FilmsComponent implements OnInit {
   //films = [];
   genres = [];
   ratings = [];
+  allFilms = [];
 
   type = "text";
   class = "form-control";
@@ -50,11 +52,12 @@ export class FilmsComponent implements OnInit {
   constructor(private _filmService: FilmService, 
     private modalService: BsModalService,
     private formBuilder: FormBuilder,
-    private store: Store) { 
+    private store: Store,
+    private ref: ChangeDetectorRef) { 
       setTheme('bs4');
       this.genres = this.getGenre();
       this.ratings = this.getRating();
-  }
+    }
 
   @Select(FilmState.getFilmList) films: Observable<IFilm[]>;
 
@@ -65,21 +68,23 @@ export class FilmsComponent implements OnInit {
     .subscribe(res => {
       if(res){
         this.loading = false;
+        this.ref.detectChanges();
       }
     });
   }
 
   deleteFilm(id: number) {
     this.store.dispatch(new DeleteFilm(id));
+    //this.ref.detectChanges();
   }
 
   updateFilm(payload: IFilm) {
     this.store.dispatch(new UpdateFilm(payload))
-    //this.store.dispatch(new SetSelectedFilm(payload))
     .pipe(take(1))
     .subscribe(() => {
       this.modalRef.hide();
       this.store.dispatch(new GetFilms());
+      //this.ref.detectChanges();
     });    
   }
 
@@ -89,6 +94,7 @@ export class FilmsComponent implements OnInit {
     .subscribe(() => {
       this.modalRef.hide();
       this.form.reset();
+      //this.ref.detectChanges();
     });
   }
 

@@ -3,8 +3,6 @@
         [people]="people"
         [person]="person">
     </app-person>
-    
-    <!-- <div>{{showFilmsOfPerson(person)}}</div> -->
 
     <app-film-list *ngIf="!loading else notLoaded"
         [userFilms]="userFilms">

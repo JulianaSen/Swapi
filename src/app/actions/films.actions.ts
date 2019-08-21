@@ -21,9 +21,3 @@ export class DeleteFilm {
     constructor(public id: number) {
     }
 }
-
-export class SetSelectedFilm {
-    static readonly type = '[IFilm] Set';
-    constructor(public payload: IFilm) {
-    }
-}
